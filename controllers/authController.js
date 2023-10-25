@@ -1,7 +1,7 @@
 import userModel from "../models/userModel.js";
 
 export const signupController = async(req,res,next)=>{
-   try{
+
     const {firstname , lastname , email, password , accounttype}= req.body;
     if(!firstname){
         // return res.status(400).send({success:false, message:"please provide firstname"})
@@ -44,9 +44,5 @@ export const signupController = async(req,res,next)=>{
         user
     })
 
-   }
-   catch(error){
-    next(error);
    
-   }
   };

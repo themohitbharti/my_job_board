@@ -1,6 +1,7 @@
 
 // const path=require("path");
 import  express  from "express";
+import "express-async-errors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
