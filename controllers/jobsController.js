@@ -27,6 +27,11 @@ export const updateJobController = async(req,res,next)=>{
       if(!job){
         next("no jobs found with this id");
       }
+    
+    // if (req.user.accounttype !== "company") {
+    //     return next("You are not authorized to update this job");
+    // }
+    
 
       const updateJob = await jobsModel.findOneAndUpdate(
         {_id:id},

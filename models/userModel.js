@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
 
      accounttype:{
         type:String,
+        enum: ["job seeker", "company", "admin"],
         default: "job seeker",
      },
 },
