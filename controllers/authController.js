@@ -38,10 +38,19 @@ export const signupController = async(req,res,next)=>{
     }
 
     const user= await userModel.create({firstname , lastname , email, password , accounttype});
+
+    const token = user.createJWT()
+
     res.status(201).send({
         success:true,
         message:"user created",
-        user
+        user:{
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            accounttype: user.accounttype,
+        },
+        token,
     })
 
    
