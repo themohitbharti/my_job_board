@@ -4,7 +4,7 @@ import {
   // deleteJobController,
   getAllJobsController,
   // jobStatsController,
-  // updateJobController,
+  updateJobController,
 } from "../controllers/jobsController.js";
 import userAuth from "../middlewares/authMiddleware.js";
 
@@ -16,8 +16,8 @@ router.post("/post", userAuth, createJobController);
 
 router.get("/list", userAuth, getAllJobsController);
 
-// //UPDATE JOBS ||  PATCH
-// router.patch("/update-job/:id", userAuth, updateJobController);
+
+router.put("/update/:id", userAuth, updateJobController);
 
 // //DELETE JOBS || DELETE
 // router.delete("/delete-job/:id", userAuth, deleteJobController);
