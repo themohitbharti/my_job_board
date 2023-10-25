@@ -1,9 +1,10 @@
 
 import jobsModel from "../models/jobsModel.js";
+import applicationModel from "../models/applicationModel.js";
 
 export const createJobController = async(req,res,next) => {
   const {company_id,job_title,job_description,location,salary,application_deadline}=req.body;
-  if(!company_id || !job_title || !job_description || !salary || !application_deadline){
+  if(!company_id || !job_title || !job_description || !location || !salary || !application_deadline){
     next("please provide all fields");
   }
 
@@ -19,7 +20,7 @@ export const getAllJobsController = async(req,res,next)=>{
 export const updateJobController = async(req,res,next)=>{
     const {id} =req.params;
     const {company_id,job_title,job_description,location,salary,application_deadline}=req.body;
-    if(!company_id || !job_title || !job_description || !salary || !application_deadline){
+    if(!company_id || !job_title || !job_description || !location || !salary || !application_deadline){
         next("please provide all fields");
       }
 
@@ -41,3 +42,26 @@ export const updateJobController = async(req,res,next)=>{
       )
       res.status(200).json({updateJob});
 };
+
+
+export const applyJobController = async(req,res,next) => {
+    const {id} =req.params;
+
+
+    const {job_seeker_id,application_date}=req.body;
+    if(!job_seeker_id || !application_date ){
+      next("please provide all fields");
+    }
+  
+    // const application = await applicationModel.create(req.body);
+   
+
+
+    const application= await applicationModel.create( {
+     
+        job_seeker_id: req.body.job_seeker_id,
+        job_id : id,
+        application_date : req.body.application_date,
+     });
+     res.status(201).json({application});
+  };

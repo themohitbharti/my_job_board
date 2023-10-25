@@ -15,6 +15,8 @@ const router = express.Router();
 router.get("/all", userAuth, getAllApplicationsController);
 
 
+
+
 // router.put("/update/:id", userAuth, updateJobController);
 
 

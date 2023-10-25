@@ -3,6 +3,7 @@ import {
   createJobController,
   getAllJobsController,
   updateJobController,
+  applyJobController,
 } from "../controllers/jobsController.js";
 import userAuth from "../middlewares/authMiddleware.js";
 
@@ -16,6 +17,8 @@ router.get("/list", userAuth, getAllJobsController);
 
 
 router.put("/update/:id", userAuth, updateJobController);
+
+router.post("/apply/:id", userAuth, applyJobController);
 
 
 export default router;
