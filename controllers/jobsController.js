@@ -53,10 +53,6 @@ export const applyJobController = async(req,res,next) => {
       next("please provide all fields");
     }
   
-    // const application = await applicationModel.create(req.body);
-   
-
-
     const application= await applicationModel.create( {
      
         job_seeker_id: req.body.job_seeker_id,
