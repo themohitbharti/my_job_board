@@ -36,6 +36,17 @@ export const getApplicationsController = async(req,res,next)=>{
     res.status(200).json({ applications });
   };
 
+
+  export const deleteApplicationsController = async(req,res,next)=>{
+    const applicationId = req.params.id;
+    const deletedApplication = await applicationModel.findByIdAndRemove(applicationId);
+    if (!deletedApplication) {
+        return res.status(404).json({ message: 'Application not found or you do not have permission to cancel it.' });
+    }
+
+    res.status(200).json({ message: 'Application deleted successfully.' });
+  };
+
 // export const updateJobController = async(req,res,next)=>{
 //     const {id} =req.params;
 //     const {company_id,job_title,job_description,location,salary,application_deadline}=req.body;

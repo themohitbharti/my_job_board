@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  
+  deleteApplicationsController,
   getAllApplicationsController,
   getApplicationsController,
   
@@ -16,6 +16,8 @@ const router = express.Router();
 router.get("/all", userAuth, getAllApplicationsController);
 
 router.get("/list/:email", userAuth,getApplicationsController);
+
+router.delete("/cancel/:id",userAuth,deleteApplicationsController);
 
 
 // router.put("/update/:id", userAuth, updateJobController);
