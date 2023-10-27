@@ -1,6 +1,7 @@
 import userModel from "../models/userModel.js";
 
 export const signupController = async(req,res,next)=>{
+    
 
     const {firstname , lastname , email, password , accounttype}= req.body;
     if(!firstname){

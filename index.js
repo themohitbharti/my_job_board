@@ -23,6 +23,7 @@ const app =express();
 
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(express.urlencoded({extended:false}));
 
 app.use("/api/v1/test", testRouter);
 app.use("/api/v1/auth", authRoutes);
