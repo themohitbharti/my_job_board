@@ -10,11 +10,11 @@ const userAuth = async (req, res, next) => {
     try {
       const payload = JWT.verify(token, process.env.JWT_SECRET);
 
-      const user = await userModel.findById(payload.userId); // Fetch user data from your user model
-      req.user = { userId: payload.userId, accounttype: user.accounttype };
+      const user = await userModel.findById(payload.userId); 
+      req.user = { userId: payload.userId, accounttype: user.accounttype ,email:user.email};
 
-    //   req.user = { userId: payload.userId };
-      console.log(req.user);
+   
+     
       next();
     } catch (error) {
       next("Auth Failed");

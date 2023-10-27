@@ -1,4 +1,4 @@
-
+import  nodemailer from "nodemailer";
 import jobsModel from "../models/jobsModel.js";
 import applicationModel from "../models/applicationModel.js";
 
@@ -29,10 +29,7 @@ export const updateJobController = async(req,res,next)=>{
         next("no jobs found with this id");
       }
     
-    // if (req.user.accounttype !== "company") {
-    //     return next("You are not authorized to update this job");
-    // }
-    
+   
 
       const updateJob = await jobsModel.findOneAndUpdate(
         {_id:id},
@@ -48,6 +45,7 @@ export const applyJobController = async (req, res, next) => {
     const { id } = req.params;
 
     const jobSeekerId = req.user.userId;
+    const jobSeekerEmail=req.user.email;
 
    
     const existingApplication = await applicationModel.findOne({ job_seeker_id: jobSeekerId, job_id: id });
@@ -67,6 +65,42 @@ export const applyJobController = async (req, res, next) => {
     });
 
     res.status(201).json({ application });
+
+
+
+
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD,
+        },
+    });
+
+
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: jobSeekerEmail, 
+        subject: 'Application Confirmation',
+       
+        text: `Your job application details:
+
+        Job Seeker ID: ${jobSeekerId}
+        Job ID: ${id}
+        Application Date: ${creationDate}
+        Status: Pending`,
+    };
+
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Email could not be sent:', error);
+        } else {
+            console.log('Email sent:', info.response);
+        }
+    });
+    
 };
 
 
