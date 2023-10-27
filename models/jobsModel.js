@@ -33,10 +33,10 @@ const jobSchema = new mongoose.Schema({
     default: "open",
   },
 
-//   applicants: {
-//     type: mongoose.Types.ObjectId,
-//     ref: "User",
-//   },
+  applicants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  }],
 },{timestamps:true});
 
 export default mongoose.model("Job", jobSchema);

@@ -64,6 +64,14 @@ export const applyJobController = async (req, res, next) => {
         application_date: creationDate,
     });
 
+    const jobPosting = await jobsModel.findByIdAndUpdate(id, {
+        $push: { applicants: jobSeekerId },
+    });
+
+    if (!jobPosting) {
+        return res.status(404).json({ message: 'Job posting not found.' });
+    }
+
     res.status(201).json({ application });
 
 
