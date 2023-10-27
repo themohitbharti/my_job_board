@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/all", userAuth, getAllApplicationsController);
 
-router.get("/list/:email", requireJobSeekerAuth,userAuth,getApplicationsController);
+router.get("/list/:email",userAuth,requireJobSeekerAuth,getApplicationsController);
 
 router.delete("/cancel/:id",userAuth,requireJobSeekerAuth,deleteApplicationsController);
 

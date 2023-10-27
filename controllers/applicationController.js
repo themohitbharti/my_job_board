@@ -18,7 +18,7 @@ export const getApplicationsController = async(req,res,next)=>{
         return res.status(404).json({ message: 'No job seeker found with this email.' });
     }
     const jobSeekerId = jobSeeker._id;
-    const applications = await applicationModel.find({ 'job_Seeker_id': jobSeekerId});
+    const applications = await applicationModel.find({ 'job_seeker_id': jobSeekerId});
     
     if (!applications) {
         return res.status(404).json({ message: 'No applications found for this job seeker.' });
