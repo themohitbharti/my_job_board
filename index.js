@@ -1,5 +1,5 @@
 
-// const path=require("path");
+import path from "path";
 import  express  from "express";
 import "express-async-errors";
 import dotenv from "dotenv";
@@ -13,6 +13,7 @@ import errorMiddleware from './middlewares/errorMiddleware.js';
 import jobsRoutes from "./routes/jobsRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import homeRoutes from "./routes/homeRoutes.js";
 
 dotenv.config();
 
@@ -28,13 +29,24 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/job", jobsRoutes);
 app.use("/api/v1/application", applicationRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/",homeRoutes);
+
 
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 8000;
 
-// app.set("view engine","ejs");
-// app.set("views" , path.resolve("./views"));
+app.set("view engine","ejs");
+app.set("views" , path.resolve("./views"));
+
+
+
+// app.get("/", (req,res)=>{
+//     res.render("home.ejs");
+// });
+
+// app.get("")
+
 
 app.listen(PORT,()=>{
     console.log(`server started at ${PORT}`);
