@@ -5,6 +5,7 @@ import {
   
 } from "../controllers/adminController.js";
 import userAuth from "../middlewares/authMiddleware.js";
+import { requireAdminAuth } from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ const router = express.Router();
 
 
 
-router.delete("/delete/:email",userAuth,deleteUserController);
+router.delete("/delete/:email",userAuth,requireAdminAuth,deleteUserController);
 
 
 

@@ -51,12 +51,13 @@ export const signupController = async(req,res,next)=>{
             email: user.email,
             accounttype: user.accounttype,
         },
-        token,
+        // token,
     })
   };
 
 export const loginController = async (req, res, next) => {
     const { email, password } = req.body;
+    
 
     if (!email || !password) {
         return res.status(400).json({ success: false, message: "Please provide both email and password." });
@@ -82,11 +83,14 @@ export const loginController = async (req, res, next) => {
 
         const token = user.createJWT();
 
+        
+
         res.status(200).json({
             success: true,
             message: "Login successful",
             user,
             token,
+            
         });
    
 };
