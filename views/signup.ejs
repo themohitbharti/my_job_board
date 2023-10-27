@@ -5,6 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script>
+       function onSubmit(token) {
+         document.getElementById("signup-form").submit();
+       }
+     </script>
 </head>
 <body>
     <h1>Sign up Form</h1>
@@ -19,9 +25,8 @@
         <input type="text" name="password">
         <label for="accounttype">Account Type</label>
         <input type="text" name="accounttype">
-        <button  type="submit">
-           submit
-          </button>
+        
+        <button class="g-recaptcha" data-sitekey="6LcGNtQoAAAAAJjG1dHOSP5aXL3Af5Z48HwnXRhE" data-callback="onSubmit">Submit</button>
     </form>
 </body>
 </html>
