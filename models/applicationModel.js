@@ -13,7 +13,7 @@ const applicationSchema = new mongoose.Schema({
  
   application_date: {
     type: String,
-    required: [true, " application deadline is required"],
+   
   },
   status: {
     type: String,

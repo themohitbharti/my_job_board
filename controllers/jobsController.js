@@ -44,49 +44,34 @@ export const updateJobController = async(req,res,next)=>{
 };
 
 
-// export const applyJobController = async(req,res,next) => {
-//     const {id} =req.params;
-
-
-//     const {application_date}=req.body;
-//     if(!application_date ){
-//       next("please provide all fields");
-//     }
-  
-//     const application= await applicationModel.create( {
-     
-//         job_seeker_id: req.user.userId,
-//         job_id : id,
-//         application_date : req.body.application_date,
-//      });
-//      res.status(201).json({application});
-//   };
-
-
-
 export const applyJobController = async (req, res, next) => {
     const { id } = req.params;
-    const { application_date } = req.body;
-
-    if (!application_date) {
-        return res.status(400).json({ message: 'Please provide all fields' });
-    }
 
     const jobSeekerId = req.user.userId;
 
-    // Check if an application with the same job seeker ID and job ID exists
+   
     const existingApplication = await applicationModel.findOne({ job_seeker_id: jobSeekerId, job_id: id });
 
     if (existingApplication) {
         return res.status(400).json({ message: 'You have already applied for this job.' });
     }
 
-    // If no existing application is found, create a new application
+   
+    const creationDate = new Date();
+
+    
     const application = await applicationModel.create({
         job_seeker_id: jobSeekerId,
         job_id: id,
-        application_date: application_date,
+        application_date: creationDate,
     });
 
     res.status(201).json({ application });
 };
+
+
+
+
+
+
+
