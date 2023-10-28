@@ -1,6 +1,7 @@
 
 import userModel from "../models/userModel.js";
 import sendEmail from "../utils/email.js";
+import  crypto  from 'crypto';
 
 export const signupController = async(req,res,next)=>{
     
@@ -53,7 +54,7 @@ export const signupController = async(req,res,next)=>{
             email: user.email,
             accounttype: user.accounttype,
         },
-        // token,
+      
     })
   };
 
@@ -102,7 +103,7 @@ export const loginController = async (req, res, next) => {
 export const forgotPassword = async (req,res,next) =>{
       const user = await userModel.findOne({email: req.body.email});
       if(!user){
-        next("can't find");
+        next("can't find user");
         return res.status(404).send("no user found with that email");
       }
 
@@ -141,8 +142,24 @@ export const forgotPassword = async (req,res,next) =>{
 
 
 
-export const resetPassword = (req,res,next)=>{
+export const resetPassword = async (req,res,next)=>{
+     const token = crypto.createHash('sha256').update(req.params.token).digest('hex');
+     const user = await userModel.findOne({passwordResetToken:token , passwordResetTokenExpire : {$gt: Date.now()}});
+     
+     if(!user){
+        return res.status(400).send("token is invalid or expired");
+     }
 
+
+     user.password = req.body.password;
+     user.passwordResetToken = undefined;
+     user.passwordResetTokenExpire = undefined;
+
+     user.save();
+
+     res.status(200).send({
+        status:"success",
+     })
 }
 
   
