@@ -1,4 +1,6 @@
+
 import userModel from "../models/userModel.js";
+import sendEmail from "../utils/email.js";
 
 export const signupController = async(req,res,next)=>{
     
@@ -95,5 +97,52 @@ export const loginController = async (req, res, next) => {
    
 };
 
+
+
+export const forgotPassword = async (req,res,next) =>{
+      const user = await userModel.findOne({email: req.body.email});
+      if(!user){
+        next("can't find");
+        return res.status(404).send("no user found with that email");
+      }
+
+
+     const resetToken = user.createResetPasswordToken();
+
+     await user.save({validateBeforeSave: false});
+
+
+     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/password/reset/${resetToken}`;
+     const message = `we have a password reset request, use the below link to reset password
+                      \n\n${resetUrl}\n\nThis reset password link will be valid only for 10 mins`;
+
+     try{
+        await sendEmail({
+          email:user.email,
+          subject: "password change request received",
+          message: message,
+       });
+
+       res.status(200).json({
+        status: "success",
+        message: "password reset link send to user email",
+       });
+     }
+     catch(err){
+          user.passwordResetToken= undefined;
+          user.passwordResetTokenExpire = undefined;
+          user.save({validateBeforeSave:false});
+
+          return res.status(500).send("there was an error sending password reset email, try again later");
+     }
+
+     
+};
+
+
+
+export const resetPassword = (req,res,next)=>{
+
+}
 
   
