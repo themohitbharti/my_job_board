@@ -43,7 +43,6 @@ export const signupController = async(req,res,next)=>{
 
     const user= await userModel.create({firstname , lastname , email, password , accounttype});
 
-    // const token = user.createJWT()
 
     res.status(201).send({
         success:true,
@@ -151,7 +150,7 @@ export const resetPassword = async (req,res,next)=>{
      }
 
 
-     user.password = req.body.password;
+     user.password = req.body.new_password;
      user.passwordResetToken = undefined;
      user.passwordResetTokenExpire = undefined;
 

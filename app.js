@@ -42,13 +42,6 @@ app.set("views" , path.resolve("./views"));
 
 
 
-// app.get("/", (req,res)=>{
-//     res.render("home.ejs");
-// });
-
-// app.get("")
-
-
 app.listen(PORT,()=>{
     console.log(`server started at ${PORT}`);
 })
